@@ -10,14 +10,14 @@ stages:
     outs:
     - path: data/raw/raw.csv
       hash: md5
-      md5: 2f536b5246f1b10eaf8ae2f52746515f
+      md5: 8e836343d95632de1fb7b0b2d5e7c5c7
       size: 116187
   preprocess_data:
     cmd: python -m src.data_preprocessing.preprocess_data
     deps:
     - path: data/raw/raw.csv
       hash: md5
-      md5: 2f536b5246f1b10eaf8ae2f52746515f
+      md5: 8e836343d95632de1fb7b0b2d5e7c5c7
       size: 116187
     - path: src/data_preprocessing/preprocess_data.py
       hash: md5
@@ -30,27 +30,27 @@ stages:
     outs:
     - path: artifacts/[features]_mean_imputer.joblib
       hash: md5
-      md5: d02d4d52670e3a5ae8e7f91caf79b77f
+      md5: e01b34ebebac3e139b15d05ec62f970a
       size: 1511
     - path: data/preprocessed/test_preprocessed.csv
       hash: md5
-      md5: 89c067430b920d0c479924cde9f52b50
-      size: 26607
+      md5: 2fe6b386edee590d99b5a8f26417b67b
+      size: 26742
     - path: data/preprocessed/train_preprocessed.csv
       hash: md5
-      md5: 32fe4c296a8cf2af3fa3cd87f0ae3861
-      size: 106023
+      md5: 6213c3a55d30645b327debfbd6c63c37
+      size: 106063
   engineer_features:
     cmd: python -m src.feature_engineering.engineer_features
     deps:
     - path: data/preprocessed/test_preprocessed.csv
       hash: md5
-      md5: 89c067430b920d0c479924cde9f52b50
-      size: 26607
+      md5: 2fe6b386edee590d99b5a8f26417b67b
+      size: 26742
     - path: data/preprocessed/train_preprocessed.csv
       hash: md5
-      md5: 32fe4c296a8cf2af3fa3cd87f0ae3861
-      size: 106023
+      md5: 6213c3a55d30645b327debfbd6c63c37
+      size: 106063
     - path: src/feature_engineering/engineer_features.py
       hash: md5
       md5: f8446b81a185b5c5d4b06fd60a3b9b9f
@@ -58,31 +58,31 @@ stages:
     outs:
     - path: artifacts/[features]_scaler.joblib
       hash: md5
-      md5: c3f9b8f8a9b205fbc84bb6a5f864cd5d
+      md5: 6344d3310f7aa44ddf04822c4344d5c3
       size: 2135
     - path: data/processed/test_processed.csv
       hash: md5
-      md5: 23c33b45f8e5dd5c2864037ed0de9a2c
-      size: 67957
+      md5: c97bb81e5986acd63eaf43b430ec496f
+      size: 67787
     - path: data/processed/train_processed.csv
       hash: md5
-      md5: 75d24822cce33b26b50d449301201460
-      size: 269920
+      md5: 82d32f7c08571965024e22d9e1f37be3
+      size: 270060
   train:
     cmd: python -m src.model_training.train_model
     deps:
     - path: data/processed/train_processed.csv
       hash: md5
-      md5: 75d24822cce33b26b50d449301201460
-      size: 269920
+      md5: 82d32f7c08571965024e22d9e1f37be3
+      size: 270060
     - path: src/model_training/train_model.py
       hash: md5
       md5: 16882d4d228f2794f649f09e0a9c36fc
       size: 5302
     params:
       params.yaml:
-        train.batch_size: 32
-        train.dropout_rate: 0.3
+        train.batch_size: 16
+        train.dropout_rate: 0.25
         train.epochs: 100
         train.hidden_layer_1_neurons: 64
         train.hidden_layer_2_neurons: 32
@@ -94,12 +94,12 @@ stages:
       size: 617
     - path: metrics/training.json
       hash: md5
-      md5: c7c2ec08daae369bfbfa06394fb8be78
-      size: 140
+      md5: 19d44d3d087b51373ac8f2e637f4e874
+      size: 141
     - path: models/model.keras
       hash: md5
-      md5: c4ce99bba955b210208315935e775ad1
-      size: 79417
+      md5: e71754926578a54cc3a82b6a91beb4a0
+      size: 79419
   evaluate:
     cmd: python -m src.model_evaluation.evaluate_model
     deps:
@@ -109,12 +109,12 @@ stages:
       size: 617
     - path: data/processed/test_processed.csv
       hash: md5
-      md5: 23c33b45f8e5dd5c2864037ed0de9a2c
-      size: 67957
+      md5: c97bb81e5986acd63eaf43b430ec496f
+      size: 67787
     - path: models/model.keras
       hash: md5
-      md5: c4ce99bba955b210208315935e775ad1
-      size: 79417
+      md5: e71754926578a54cc3a82b6a91beb4a0
+      size: 79419
     - path: src/model_evaluation/evaluate_model.py
       hash: md5
       md5: 1300021eeca5193c758efb74cfff4814
@@ -122,5 +122,5 @@ stages:
     outs:
     - path: metrics/evaluation.json
       hash: md5
-      md5: 570601dd65f4510f87fd497db86d0776
-      size: 736
+      md5: 6427fe8c084b13940dac706525c38ec7
+      size: 764
