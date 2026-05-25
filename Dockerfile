@@ -14,3 +14,6 @@ EXPOSE 5001
 
 # Run gunicorn
 CMD ["gunicorn", "--bind=0.0.0.0:5001", "app.main:app"]
+
+#mlflow
+mlruns 
